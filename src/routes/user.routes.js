@@ -1,4 +1,5 @@
 const express = require('express');
+const authenticate = require('../middlewares/auth.middlewares');
 const UserControllers = require('../controllers/user.controllers');
 const {
   validateDisplayName,
@@ -17,5 +18,7 @@ userRoute.post(
   validateUserRegistered,
   UserControllers.createUser,
 );
+
+userRoute.get('/', authenticate, UserControllers.getAll);
 
 module.exports = userRoute;
