@@ -10,6 +10,10 @@ const {
 
 const userRoute = express.Router();
 
+userRoute.get('/', authenticate, UserControllers.getAll);
+
+userRoute.get('/:id', authenticate, UserControllers.getById);
+
 userRoute.post(
   '/',
   validateDisplayName,
@@ -18,7 +22,5 @@ userRoute.post(
   validateUserRegistered,
   UserControllers.createUser,
 );
-
-userRoute.get('/', authenticate, UserControllers.getAll);
 
 module.exports = userRoute;

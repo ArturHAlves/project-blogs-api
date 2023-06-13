@@ -12,4 +12,7 @@ const createUser = async ({ displayName, email, password, image }) => {
 const getAll = async () =>
   User.findAll({ attributes: { exclude: ['password'] } });
 
-module.exports = { createUser, getAll };
+const getByID = async (id) =>
+  User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+
+module.exports = { createUser, getAll, getByID };
