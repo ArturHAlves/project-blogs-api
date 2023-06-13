@@ -5,6 +5,8 @@ const authenticate = require('../middlewares/auth.middlewares');
 
 const categoryRoute = express.Router();
 
+categoryRoute.get('/', authenticate, CategoryController.getAll);
+
 categoryRoute.post(
   '/',
   authenticate,
