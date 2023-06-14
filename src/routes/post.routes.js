@@ -6,6 +6,8 @@ const { validateFieldsPost } = require('../middlewares/post.middlewares');
 
 const postRoute = express.Router();
 
+postRoute.get('/', authenticate, postController.getAll);
+
 postRoute.post('/', authenticate, validateFieldsPost, postController.createPost);
 
 module.exports = postRoute;

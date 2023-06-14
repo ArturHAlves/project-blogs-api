@@ -13,4 +13,14 @@ const createPost = async (req, res) => {
   }
 };
 
-module.exports = { createPost };
+const getAll = async (req, res) => {
+  try {
+    const post = await postService.getAll();
+
+    return res.status(200).json(post);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createPost, getAll };

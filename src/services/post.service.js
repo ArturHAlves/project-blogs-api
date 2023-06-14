@@ -1,4 +1,4 @@
-const { BlogPost } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 const mappingId = require('../utils/mappingPostCategoryIds');
 const CategoryService = require('./category.service');
 const PostCategoryService = require('./postCategory.service');
@@ -30,4 +30,22 @@ const createPost = async ({ title, content, categoryIds }, user) => {
   return newPost;
 };
 
-module.exports = { createPost };
+const getAll = async () => {
+  const posts = await BlogPost.findAll({
+    include: [
+      { model: User, 
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+
+      { model: Category, 
+        as: 'categories', 
+        attributes: ['id', 'name'], 
+        through: { attributes: [] } },
+    ],
+  });
+
+  return posts;
+};
+
+module.exports = { createPost, getAll };
