@@ -4,10 +4,10 @@ const TOKEN_SECRET = process.env.JWT_SECRET;
 
 const CONFIG_JTW = { algorithm: 'HS256' };
 
-const generateToken = ({ displayName, email, image }) => {
+const generateToken = ({ id, displayName, email, image }) => {
   try {
     const sign = jwt.sign(
-      { displayName, email, image },
+      { id, displayName, email, image },
       TOKEN_SECRET,
       CONFIG_JTW,
     );

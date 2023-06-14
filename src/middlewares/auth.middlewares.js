@@ -13,6 +13,9 @@ const authenticateMiddlewares = async (req, res, next) => {
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
 
+  // Cria uma chave: Vai trazer informações do user - id, displayName, email...
+  req.locals = user;
+
   next();
 };
 
