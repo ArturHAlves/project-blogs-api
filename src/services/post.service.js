@@ -6,6 +6,7 @@ const PostCategoryService = require('./postCategory.service');
 // 14/jun - Ajuda Pablo
 const createPost = async ({ title, content, categoryIds }, user) => {
   const category = await CategoryService.getById(categoryIds);
+  
   const hasCategory = await 
   Promise.all(category.map(({ dataValues: { id } }) => id !== categoryIds));
 
