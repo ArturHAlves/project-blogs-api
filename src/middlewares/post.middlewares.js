@@ -1,4 +1,4 @@
-const validateFieldsPost = async (req, res, next) => {
+const validateFieldsCreate = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
 
   if (!title || !content || !categoryIds) {
@@ -10,4 +10,16 @@ const validateFieldsPost = async (req, res, next) => {
   return next();
 };
 
-module.exports = { validateFieldsPost };
+const validateFieldsUpdate = async (req, res, next) => {
+  const { title, content } = req.body;
+
+  if (!title || !content) {
+    return res
+      .status(400)
+      .json({ message: 'Some required fields are missing' });
+  }
+
+  return next();
+};
+
+module.exports = { validateFieldsCreate, validateFieldsUpdate };

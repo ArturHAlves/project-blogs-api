@@ -1,3 +1,5 @@
+// Op - Operadores do Sequelize  
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 const mappingId = require('../utils/mappingPostCategoryIds');
 const CategoryService = require('./category.service');
@@ -67,4 +69,14 @@ const getById = async (id) => {
   return post;
 };
 
-module.exports = { createPost, getAll, getById };
+const updatedPost = async (id, title, content, userId) => {
+ const post = await BlogPost.update({ title, content }, { where: { 
+  [Op.and]: [
+    { id }, { userId },
+  ],
+  } });
+
+  return post;
+};
+
+module.exports = { createPost, getAll, getById, updatedPost };

@@ -1,4 +1,5 @@
 const postService = require('../services/post.service');
+const authorizedUser = require('../utils/authorizedUser');
 
 const createPost = async (req, res) => {
   try {
@@ -39,4 +40,25 @@ const getById = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getAll, getById };
+const updatePost = async (req, res) => {
+  try {
+    const { id: userId } = req.locals;
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    const authorized = await authorizedUser(Number(id), userId);
+    if (!authorized) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+
+    await postService.updatedPost(id, title, content, userId);
+
+    const post = await postService.getById(id);
+
+    return res.status(200).json(post);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createPost, getAll, getById, updatePost };
