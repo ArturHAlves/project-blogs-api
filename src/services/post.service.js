@@ -79,6 +79,28 @@ const updatedPost = async (id, title, content, userId) => {
   return post;
 };
 
+const searchPost = async (searchTerm) => {
+  const post = await BlogPost.findAll({
+    where: {
+      [Op.or]: {
+        title: { [Op.like]: `%${searchTerm}%` },
+        content: { [Op.like]: `%${searchTerm}%` },
+      },
+    },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+
+      {
+        model: Category,
+        as: 'categories',
+        attributes: ['id', 'name'],
+        through: { attributes: [] },
+      },
+    ],
+  });
+  return post;
+};
+
 const deletePost = async (id) => BlogPost.destroy({ where: { id } });
 
-module.exports = { createPost, getAll, getById, updatedPost, deletePost };
+module.exports = { createPost, getAll, getById, updatedPost, deletePost, searchPost };

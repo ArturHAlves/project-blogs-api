@@ -6,6 +6,8 @@ const { validateFieldsCreate, validateFieldsUpdate } = require('../middlewares/p
 
 const postRoute = express.Router();
 
+postRoute.get('/search', authenticate, postController.searchPost);
+
 postRoute.get('/', authenticate, postController.getAll);
 
 postRoute.get('/:id', authenticate, postController.getById);
