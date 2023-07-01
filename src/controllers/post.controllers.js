@@ -1,5 +1,5 @@
 const postService = require('../services/post.service');
-const { authorizedUser, authorizedUser2 } = require('../utils/authorizedUser');
+const authorizedUser = require('../utils/authorizedUser');
 
 const createPost = async (req, res) => {
   try {
@@ -72,7 +72,7 @@ const deletePost = async (req, res) => {
       return res.status(404).json({ message: 'Post does not exist' });
     }
 
-    const authorized = await authorizedUser2(Number(id), userId);
+    const authorized = await authorizedUser(Number(id), userId);
     if (!authorized) {
       return res.status(401).json({ message: 'Unauthorized user' });
     }
