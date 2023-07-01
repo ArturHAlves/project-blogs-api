@@ -14,6 +14,8 @@ userRoute.get('/', authenticate, UserControllers.getAll);
 
 userRoute.get('/:id', authenticate, UserControllers.getById);
 
+userRoute.delete('/me', authenticate, UserControllers.deleteUser);
+
 userRoute.post(
   '/',
   validateDisplayName,

@@ -15,4 +15,6 @@ const getAll = async () =>
 const getByID = async (id) =>
   User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
 
-module.exports = { createUser, getAll, getByID };
+const deleteUser = async (id) => User.destroy({ where: { id } });
+
+module.exports = { createUser, getAll, getByID, deleteUser };

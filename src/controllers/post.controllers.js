@@ -14,7 +14,7 @@ const createPost = async (req, res) => {
   }
 };
 
-const getAll = async (req, res) => {
+const getAll = async (_req, res) => {
   try {
     const posts = await postService.getAll();
 
@@ -30,10 +30,8 @@ const getById = async (req, res) => {
 
     const post = await postService.getById(id);
 
-    if (!post) {
-      return res.status(404).json({ message: 'Post does not exist' });
-    }
-
+    if (!post) return res.status(404).json({ message: 'Post does not exist' });
+    
     return res.status(200).json(post);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -47,10 +45,8 @@ const updatePost = async (req, res) => {
     const { title, content } = req.body;
 
     const authorized = await authorizedUser(Number(id), userId);
-    if (!authorized) {
-      return res.status(401).json({ message: 'Unauthorized user' });
-    }
-
+    if (!authorized) return res.status(401).json({ message: 'Unauthorized user' });
+    
     await postService.updatedPost(id, title, content, userId);
 
     const post = await postService.getById(id);
@@ -68,15 +64,11 @@ const deletePost = async (req, res) => {
 
     const post = await postService.getById(id);
 
-    if (!post) {
-      return res.status(404).json({ message: 'Post does not exist' });
-    }
-
+    if (!post) return res.status(404).json({ message: 'Post does not exist' });
+    
     const authorized = await authorizedUser(Number(id), userId);
-    if (!authorized) {
-      return res.status(401).json({ message: 'Unauthorized user' });
-    }
-
+    if (!authorized) return res.status(401).json({ message: 'Unauthorized user' });
+    
     await postService.deletePost(id);
 
     return res.status(204).end();
