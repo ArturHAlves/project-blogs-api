@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost } = require('../models');
 
 const authorizedUser = async (postId, idUser) => {
@@ -8,4 +9,14 @@ const authorizedUser = async (postId, idUser) => {
   return post;
 };
 
-module.exports = authorizedUser;
+const authorizedUser2 = async (id, userId) => {
+  const post = await BlogPost.findOne({
+    where: {
+      [Op.and]: [{ id }, { userId }],
+    },
+  });
+
+  return post;
+};
+
+module.exports = { authorizedUser, authorizedUser2 };

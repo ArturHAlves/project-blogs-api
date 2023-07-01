@@ -14,4 +14,6 @@ postRoute.post('/', authenticate, validateFieldsCreate, postController.createPos
 
 postRoute.put('/:id', authenticate, validateFieldsUpdate, postController.updatePost);
 
+postRoute.delete('/:id', authenticate, postController.deletePost);
+
 module.exports = postRoute;
